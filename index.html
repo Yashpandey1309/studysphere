@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudySphere</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:#0f172a;
+  color:#fff;
+  overflow-x:hidden;
+}
+
+/* LOADER */
+.loader{
+  position:fixed;
+  inset:0;
+  background:#0f172a;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:9999;
+}
+.loader span{
+  width:50px;height:50px;
+  border:5px solid #fff;
+  border-top-color:transparent;
+  border-radius:50%;
+  animation:spin 1s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* BG BLOBS */
+.blob{
+  position:fixed;
+  width:400px;height:400px;
+  border-radius:50%;
+  filter:blur(100px);
+  opacity:0.4;
+  animation:move 15s infinite alternate;
+}
+.blob1{background:#7c3aed;top:-100px;left:-100px;}
+.blob2{background:#ec4899;bottom:-100px;right:-100px;}
+
+@keyframes move{
+  0%{transform:translate(0,0);}
+  100%{transform:translate(80px,100px);}
+}
+
+/* NAV */
+nav{
+  display:flex;
+  justify-content:space-between;
+  padding:20px 30px;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(12px);
+  position:sticky;top:0;
+}
+
+nav ul{display:flex;gap:20px;list-style:none;}
+nav a{color:#ddd;text-decoration:none;}
+
+.hero{
+  text-align:center;
+  padding:100px 20px;
+  animation:fadeUp 1s ease;
+}
+.hero h1{font-size:50px;}
+
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(30px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* FEATURES */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:25px;
+  padding:50px;
+}
+
+.card{
+  background:rgba(255,255,255,0.05);
+  padding:25px;
+  border-radius:16px;
+  backdrop-filter:blur(10px);
+  transition:.4s;
+  opacity:0;
+  transform:translateY(30px);
+}
+.card.active{
+  opacity:1;
+  transform:translateY(0);
+}
+.card:hover{
+  transform:translateY(-10px) scale(1.02);
+}
+
+.card p{
+  margin-top:8px;
+  font-size:14px;
+  color:#bbb;
+}
+
+/* NOTES */
+.notes-section{
+  padding:80px 20px;
+}
+
+.notes-container{
+  display:flex;
+  gap:20px;
+  overflow-x:auto;
+}
+
+.note-card{
+  min-width:300px;
+  height:200px;
+  border-radius:20px;
+  position:relative;
+  overflow:hidden;
+}
+
+.note-card::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.4);
+}
+
+.note-content{
+  position:absolute;
+  bottom:10px;
+  left:10px;
+}
+
+.download{
+  position:absolute;
+  bottom:10px;
+  right:10px;
+  background:rgba(255,255,255,0.2);
+  padding:8px;
+  border-radius:50%;
+  cursor:pointer;
+  transition:.3s;
+}
+.download:hover{
+  background:#fff;
+  color:#000;
+  transform:scale(1.2);
+}
+
+.note1{background:url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f') center/cover;}
+.note2{background:url('https://images.unsplash.com/photo-1519389950473-47ba0277781c') center/cover;}
+.note3{background:url('https://images.unsplash.com/photo-1498050108023-c5249f4df085') center/cover;}
+.note4{background:url('https://images.unsplash.com/photo-1554224155-6726b3ff858f') center/cover;}
+.note5{background:url('https://images.unsplash.com/photo-1560472355-536de3962603') center/cover;}
+
+/* CHAT */
+.chat-section{
+  max-width:700px;
+  margin:80px auto;
+  background:rgba(255,255,255,0.05);
+  padding:25px;
+  border-radius:16px;
+  backdrop-filter:blur(10px);
+}
+
+.chat-box{
+  max-height:250px;
+  overflow-y:auto;
+  margin-bottom:15px;
+}
+
+.message{
+  background:rgba(255,255,255,0.1);
+  padding:12px;
+  border-radius:10px;
+  margin-bottom:10px;
+}
+
+.user{
+  font-size:12px;
+  color:#a78bfa;
+  margin-bottom:3px;
+}
+
+/* INPUT */
+.chat-input{
+  display:flex;
+  gap:10px;
+}
+
+.chat-input input{
+  flex:1;
+  padding:14px;
+  border-radius:12px;
+  border:none;
+  outline:none;
+  font-size:15px;
+  background:rgba(255,255,255,0.1);
+  color:#fff;
+}
+
+.chat-input input::placeholder{
+  color:#bbb;
+}
+
+.chat-input button{
+  padding:14px 20px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(135deg,#7c3aed,#ec4899);
+  color:#fff;
+  cursor:pointer;
+}
+
+/* CONTACT FIXED */
+.contact{
+  padding:80px 20px;
+  text-align:center;
+}
+
+.contact form{
+  max-width:400px;
+  margin:auto;
+}
+
+.contact input,.contact textarea{
+  width:100%;
+  padding:14px;
+  margin-top:10px;
+  border-radius:10px;
+  border:none;
+  background:rgba(255,255,255,0.1);
+  color:#fff;
+}
+
+/* FOOTER */
+footer{
+  padding:30px;
+  text-align:center;
+  background:#020617;
+  color:#aaa;
+}
+</style>
+</head>
+
+<body>
+
+<div class="loader"><span></span></div>
+<div class="blob blob1"></div>
+<div class="blob blob2"></div>
+
+<nav>
+  <h2>📚 StudySphere</h2>
+  <ul>
+    <li><a href="#">Home</a></li>
+    <li><a href="#notes">Notes</a></li>
+    <li><a href="#chat">Chat</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <h1>Elevate Your Learning ✨</h1>
+</section>
+
+<!-- FEATURES -->
+<section class="grid">
+  <div class="card"><h3>📖 Smart Notes</h3><p>Upload, organize and access notes anytime.</p></div>
+  <div class="card"><h3>👥 Study Network</h3><p>Connect with students and grow together.</p></div>
+  <div class="card"><h3>💬 Group Sessions</h3><p>Collaborate in focused study groups.</p></div>
+  <div class="card"><h3>⚡ Real-time Chat</h3><p>Instant communication with peers.</p></div>
+  <div class="card"><h3>📂 Clean Workspace</h3><p>Stay organized and productive.</p></div>
+  <div class="card"><h3>🌍 Global Access</h3><p>Learn anytime from anywhere.</p></div>
+</section>
+
+<!-- NOTES -->
+<section id="notes" class="notes-section">
+<div class="notes-container">
+
+<div class="note-card note1"><div class="note-content">Accounts</div><div class="download"><i class="fa fa-download"></i></div></div>
+<div class="note-card note2"><div class="note-content">Economics</div><div class="download"><i class="fa fa-download"></i></div></div>
+<div class="note-card note3"><div class="note-content">Business</div><div class="download"><i class="fa fa-download"></i></div></div>
+<div class="note-card note4"><div class="note-content">Taxation</div><div class="download"><i class="fa fa-download"></i></div></div>
+<div class="note-card note5"><div class="note-content">Finance</div><div class="download"><i class="fa fa-download"></i></div></div>
+
+</div>
+</section>
+
+<!-- CHAT -->
+<section id="chat" class="chat-section">
+<h2>💬 Live Chat</h2>
+
+<div id="chatBox" class="chat-box">
+  <div class="message"><div class="user">Rahul</div>Anyone has accounts notes?</div>
+  <div class="message"><div class="user">Priya</div>Check notes section 👍</div>
+  <div class="message"><div class="user">Aman</div>Economics notes are really helpful!</div>
+</div>
+
+<div class="chat-input">
+  <input id="msg" placeholder="Type your message...">
+  <button onclick="sendMsg()">Send</button>
+</div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact">
+<h2>Contact Us</h2>
+<form>
+<input placeholder="Name">
+<input placeholder="Email">
+<textarea placeholder="Message"></textarea>
+</form>
+</section>
+
+<footer>
+ StudySphere 🚀
+</footer>
+
+<script>
+window.onload = () => {
+  document.querySelector(".loader").style.display = "none";
+};
+
+function sendMsg(){
+  let msg=document.getElementById("msg").value;
+  if(msg.trim()!==""){
+    let div=document.createElement("div");
+    div.className="message";
+    div.innerHTML=`<div class="user">You</div>${msg}`;
+    document.getElementById("chatBox").appendChild(div);
+    document.getElementById("msg").value="";
+  }
+}
+
+window.addEventListener("scroll",()=>{
+  document.querySelectorAll(".card").forEach(el=>{
+    if(el.getBoundingClientRect().top < window.innerHeight-50){
+      el.classList.add("active");
+    }
+  });
+});
+</script>
+
+</body>
+</html>
